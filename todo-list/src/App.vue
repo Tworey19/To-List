@@ -38,13 +38,24 @@ const addTodo = async () => {
 		});
 
 		
-		todos.value.unshift(response.data.user);
+		todos.value.unshift(response.data.task);
 
 		
 		input_content.value = '';
 		input_category.value = null;
 	} catch (error) {
 		console.error("Erro ao adicionar tarefa:", error);
+	}
+}
+
+const updateTodo = async (todo) => {
+	try {
+		await api.put(`/atualizar/${todo.id}`, {
+			content: todo.content,
+			done: todo.done
+		});
+	} catch (error) {
+		console.error("Erro ao atualizar tarefa:", error);
 	}
 }
 
@@ -62,9 +73,13 @@ const removeTodo = async (todo) => {
 onMounted(async () => {
 	name.value = localStorage.getItem('name') || ''
 	
-	const response = await api.get('/users');
-	todos.value = response.data.users;
+	const response = await api.get('/tasks');
+	todos.value = response.data.tasks;
 })
+
+watch(todos, (newVal) => {
+  
+}, { deep: true })
 </script>
 
 <template>
@@ -80,7 +95,7 @@ onMounted(async () => {
 			<h3>CREATE A TO-DO</h3>
 
 			<form id="new-todo-form" @submit.prevent="addTodo">
-				<h4>What's on your todo list?</h4>
+				<h4>What's on your to-do list?</h4>
 				<input 
 					type="text" 
 					name="content" 
@@ -115,7 +130,7 @@ onMounted(async () => {
 
 				</div>
 
-				<input type="submit" value="Add todo" />
+				<input type="submit" value="Add to-do" />
 			</form>
 		</section>
 
@@ -125,7 +140,7 @@ onMounted(async () => {
 
 				<div v-for="todo in todos_asc" :key="todo.id" :class="`todo-item ${todo.done && 'done'}`">
 					<label>
-						<input type="checkbox" v-model="todo.done" />
+						<input type="checkbox" v-model="todo.done" @change="updateTodo(todo)" />
 						<span :class="`bubble ${
 							todo.category == 'business' 
 								? 'business' 
@@ -134,7 +149,7 @@ onMounted(async () => {
 					</label>
 
 					<div class="todo-content">
-						<input type="text" v-model="todo.content" />
+						<input type="text" v-model="todo.content" @change="updateTodo(todo)" />
 					</div>
 
 					<div class="actions">

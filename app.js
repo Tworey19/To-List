@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors'); 
 const app = express();
-const User = require('./models/User');
+const Task = require('./models/Task');
 const db = require('./models/db');
 
 app.use(express.json());
@@ -20,17 +20,17 @@ app.get("/", async (req, res) => {
 });
 
 
-app.get("/users", async (req, res) => {
+app.get("/tasks", async (req, res) => {
     try {
         
-        const users = await User.findAll({ order: [['id', 'DESC']] });
+        const tasks = await Task.findAll({ order: [['id', 'DESC']] });
         return res.json({
-            erro: false,
-            users
+           
+            tasks
         });
     } catch (error) {
         return res.status(400).json({
-            erro: true,
+            erro: error,
             mensagem: "Erro: Nenhuma tarefa encontrada."
         });
     }
@@ -39,11 +39,11 @@ app.get("/users", async (req, res) => {
 app.post("/cadastrar", async (req, res) => {
     try {
        
-        const user = await User.create(req.body);
+        const task = await Task.create(req.body);
         return res.json({
             erro: false,
             mensagem: "Tarefa cadastrada com sucesso!",
-            user 
+            task 
         });
     } catch (error) {
         return res.status(400).json({
@@ -56,14 +56,14 @@ app.post("/cadastrar", async (req, res) => {
 app.delete("/deletar/:id", async (req, res) => {
     const { id } = req.params;
     try {
-        const user = await User.findOne({ where: { id } });
-        if (user === null) {
+        const task = await Task.findOne({ where: { id } });
+        if (task === null) {
             return res.status(400).json({
                 erro: true,
                 mensagem: "Erro: Tarefa não encontrada!"
             });
         }
-        await User.destroy({ where: { id } });
+        await Task.destroy({ where: { id } });
         return res.json({
             erro: false,
             mensagem: "Tarefa deletada com sucesso!"
@@ -79,7 +79,7 @@ app.delete("/deletar/:id", async (req, res) => {
 app.put("/atualizar/:id", async (req, res) => {
     const { id } = req.params;
     try {
-        const [numberOfAffectedRows] = await User.update(req.body, { where: { id } });
+        const [numberOfAffectedRows] = await Task.update(req.body, { where: { id } });
         if (numberOfAffectedRows === 0) {
             return res.status(400).json({
                 erro: true,

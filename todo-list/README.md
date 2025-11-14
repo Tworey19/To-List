@@ -1,38 +1,35 @@
-# todo-list
+COMO RODAR O PROJETO BAIXADO
+Instalar todas as dependencias indicada pelo package.json
+### npm install
 
-This template should help get you started developing with Vue 3 in Vite.
+Rodar o projeto com nodemon
+### nodemon app.js
 
-## Recommended IDE Setup
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
 
-## Recommended Browser Setup
+SEQUENCIA PARA CRIAR O PROJETO
+Criar o arquivo package
+### npm init
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd) 
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+Gerencia as requisições, rotas e URLs, entre outra funcionalidades
+### npm install express
 
-## Customize configuration
+Rodar o projeto 
+### node app.js
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+Acessar o projeto no navegador
+### http://localhost:8080
 
-## Project Setup
+Instalar o módulo para reiniciar o servidor sempre que houver alteração no código fonte, g significa globalmente
+### npm install -g nodemon
+### npm install --save-dev nodemon
 
-```sh
-npm install
-```
+Rodar o projeto com nodemon
+### nodemon app.js
 
-### Compile and Hot-Reload for Development
+Sequelize é uma biblioteca Javascript que facilita o gerenciamento de um banco de dados SQL
+### npm install --save sequelize
 
-```sh
-npm run dev
-```
+Instalar o drive do banco de dados
+### npm install --save mysql2
 
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
